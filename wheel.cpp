@@ -1,21 +1,18 @@
 #include <GL/glut.h>
 
-float angle=0,xpos=-1,speed=0.01,ypos=0.0;
+float angle=0,xpos=-1,speed=0.001,ypos=0.0;
 
 void button(unsigned char key, int x, int y)
 {
-	switch(key)//reacts to inputs
+	switch(key) //inputs
 	{
-		case 114://+
-			angle=5;xpos=-1;speed=0.01;
+		case 45:// reduce speed
+			speed-=0.001;
 			break;
-		case 45://-
-			speed-=0.01;
+		case 43://for increasing speed
+			speed+=0.001;
 			break;
-		case 43://r
-			speed+=0.01;
-			break;
-		case 113://q
+		case 113:// exit
 			exit(0);
 			break;
 	}
@@ -24,11 +21,10 @@ void button(unsigned char key, int x, int y)
 
 void idle(){
         angle-=5;//5 degrees anti-clockwise
-        if(xpos<=1)
+        if(xpos<=1.5)
                 xpos+=speed;//propagates to right
         else
-                xpos=xpos-2;//resets wheel to left upon reaching right end
-
+                xpos=xpos-2.5;//resets wheel to left upon reaching right end
         glutPostRedisplay();
 }
 
@@ -44,7 +40,7 @@ void display(){
         glScalef(0.1,0.1,0.1);
         
         //TORUS
-        glutWireTorus(0.5, 2.0, 30, 30);
+        glutWireTorus(0.5, 2.0, 200, 200);
         
 	//SPOKES
 	glBegin(GL_LINES);
@@ -79,4 +75,10 @@ int main(int argc, char** argv)
         
         glutMainLoop();
 }
+
+
+// use these commands to compile
+// g++ gl.cpp -o out -lglute -lGLU -lGL
+// ./out
+
 
